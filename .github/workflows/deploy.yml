@@ -1,0 +1,26 @@
+name: Deploy CHT832x Extension
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build and deploy extension
+        uses: BlueOS-community/Deploy-BlueOS-Extension@v1
+
+        with:
+          docker-username: ${{ secrets.DOCKER_USERNAME }}
+          docker-password: ${{ secrets.DOCKER_PASSWORD }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          image-name: ${{ vars.IMAGE_NAME }}
+
+          author: ${{ vars.MY_NAME }}
+          author-email: ${{ vars.MY_EMAIL }}
+
+          maintainer: ${{ vars.ORG_NAME }}
+          maintainer-email: ${{ vars.ORG_EMAIL }}
