@@ -1,30 +1,30 @@
 FROM alpine:3.18.3
 
-# Install Nginx and Python
 RUN apk add --no-cache \
     nginx \
     python3 \
     py3-pip \
-    i2c-tools \
     && python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --no-cache-dir Flask smbus2
 
-# Install Nginx configuration
+# Nginx configuration
 COPY files/nginx.conf /etc/nginx/nginx.conf
 
-# Install the Cockpit registration file and web interface
+# Web interface and Cockpit registration
 RUN mkdir -p /site
 COPY files/register_service /site/register_service
 COPY site/ /site/
 
-# Install the Python application and startup script
-RUN mkdir -p /app
-COPY app/sensor.py /app/sensor.py
+# Python sensor driver and API
+RUN mkdir -p /app/app
+COPY app/ /app/app/
+
+# Startup script
 COPY files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Tell BlueOS that the extension uses HTTP port 80
-# and needs access to the Raspberry Pi I2C device.
+WORKDIR /app
+
 LABEL permissions='{\
   "ExposedPorts": {\
     "80/tcp": {}\
