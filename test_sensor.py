@@ -3,12 +3,10 @@ import time
 from app.sensor import CHT832x
 
 sensor = CHT832x(bus_number=1)
-print("created instance of cht832")
 
 while True:
     try:
         measurement = sensor.read()
-        print("passed sensor.read()")
 
         print(
             f"Temperature: "
