@@ -19,7 +19,7 @@ COPY site/ /site/
 
 # Install the Python application and startup script
 RUN mkdir -p /app
-COPY app.py /app/app.py
+COPY app/sensor.py /app/sensor.py
 COPY files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
