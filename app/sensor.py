@@ -23,7 +23,6 @@ class CHT832x:
 
     def __init__(self, bus_number=1):
         self.bus_number = bus_number
-        print("passed __init__")
 
     @staticmethod
     def _crc8(data):
@@ -42,7 +41,6 @@ class CHT832x:
         return crc
 
     def read(self):
-        print("begin read")
         """Read temperature in Celsius and relative humidity."""
         with SMBus(self.bus_number) as bus:
             bus.write_i2c_block_data(
