@@ -1,7 +1,21 @@
+"""
+October 16, 2026
+This code is for the CHT832X temperature and humidity sensor from DF Robot, ppart number SEN0546
+
+=====Instructions=====
+connect the CHT832X directly to the pi header:
+| Pi Pins  |  CHT832x |
+| ---      |  ---     |
+| 3        | yellow   |
+| 4        | red      |
+| 5        | green    |
+| 6        | black    |
+
+"""
+
 import time
 
-from smbus2 import SMBus
-
+from smbus2 import SMBus, i2c_msg
 
 class CHT832x:
     ADDRESS = 0x44
@@ -9,6 +23,7 @@ class CHT832x:
 
     def __init__(self, bus_number=1):
         self.bus_number = bus_number
+        print("passed __init__")
 
     @staticmethod
     def _crc8(data):
@@ -27,6 +42,7 @@ class CHT832x:
         return crc
 
     def read(self):
+        print("begin read")
         """Read temperature in Celsius and relative humidity."""
         with SMBus(self.bus_number) as bus:
             bus.write_i2c_block_data(
@@ -34,14 +50,13 @@ class CHT832x:
                 self.MEASURE_COMMAND[0],
                 [self.MEASURE_COMMAND[1]],
             )
-
             time.sleep(0.060)
-
-            data = bus.read_i2c_block_data(
-                self.ADDRESS,
-                0x00,
-                6,
-            )
+            try:
+               data=i2c_msg.read(self.ADDRESS,6)
+               bus.i2c_rdwr(data)
+               data=list(data)
+            except Exception as e:
+               print(f"Error: {e}")
 
         if len(data) != 6:
             raise IOError("Incomplete CHT832x measurement")
