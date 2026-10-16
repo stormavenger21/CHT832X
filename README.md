@@ -1,7 +1,6 @@
-# BlueOS Extension Template
+# BlueOS Extension for CHT832X
 
-This template provides you a foundation to kickstart your journey as a BlueOS extensions developer!
-Please follow the instructions to launch your first BlueOS application.
+This repo integrates the CHT832X temperature and humidity sensor with a Raspberry Pi and BlueOS. 
 
 
 ## Instructions
