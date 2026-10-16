@@ -1,0 +1,21 @@
+{
+   ...
+   "actions": [
+      {
+         "id": "CHT832x,
+         "name": "Get-Temperature",
+         "type": "http-request",
+         "config": {
+            "name": "Get-Temperature",
+            "url": "http://{{ 192.168.2.2 }}/extensionv2/myextension/api/speed",
+            "method": "POST",
+            "headers": {
+               "Content-Type": "application/json"
+            },
+            "urlParams": {},
+            "body": "{\"speed\":10}",
+         },
+         "version": "1.0.0"
+      }
+   ]
+}
