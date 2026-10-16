@@ -20,7 +20,3 @@ jobs:
           image-name: ${{ vars.IMAGE_NAME }}
 
           author: ${{ vars.MY_NAME }}
-          author-email: ${{ vars.MY_EMAIL }}
-
-          maintainer: ${{ vars.ORG_NAME }}
-          maintainer-email: ${{ vars.ORG_EMAIL }}
