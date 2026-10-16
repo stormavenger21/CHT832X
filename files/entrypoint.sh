@@ -1,9 +1,13 @@
 #!/bin/sh
 
-# turn on bash's job control
-set -m
+set -e
 
-echo "Starting nginx.."
-nginx &
-echo "Starting our application.."
-sleep infinity
+echo "Starting CHT832x sensor application..."
+
+# Start the Python API in the background.
+/opt/venv/bin/python -u /test_sensor.py &
+
+echo "Starting Nginx..."
+
+# Keep Nginx in the foreground so Docker tracks it correctly.
+exec nginx -g "daemon off;"
