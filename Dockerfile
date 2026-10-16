@@ -1,19 +1,30 @@
 FROM alpine:3.18.3
 
-RUN apk update && apk add nginx
+# Install Nginx and Python
+RUN apk add --no-cache \
+    nginx \
+    python3 \
+    py3-pip \
+    i2c-tools \
+    && python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --no-cache-dir Flask smbus2
 
-# Move our nginx configuration to the standard nginx path
+# Install Nginx configuration
 COPY files/nginx.conf /etc/nginx/nginx.conf
 
-# Add our static files to a common folder to be provided by nginx
+# Install the Cockpit registration file and web interface
 RUN mkdir -p /site
 COPY files/register_service /site/register_service
 COPY site/ /site/
 
-# Copy everything for your application
+# Install the Python application and startup script
+RUN mkdir -p /app
+COPY app.py /app/app.py
 COPY files/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Add docker configuration
+# Tell BlueOS that the extension uses HTTP port 80
+# and needs access to the Raspberry Pi I2C device.
 LABEL permissions='{\
   "ExposedPorts": {\
     "80/tcp": {}\
@@ -25,14 +36,18 @@ LABEL permissions='{\
           "HostPort": ""\
         }\
       ]\
-    }\
+    },\
+    "Devices": [\
+      {\
+        "PathOnHost": "/dev/i2c-1",\
+        "PathInContainer": "/dev/i2c-1",\
+        "CgroupPermissions": "rwm"\
+      }\
+    ]\
   }\
 }'
-LABEL authors='[\
-    {\
-        "name": "Dockerfile",\
-    }\
-]'
 
+LABEL authors='[{"name":"CHT832x Extension"}]'
 LABEL readme="https://github.com/stormavenger21/CHT832X/blob/main/README.md"
+
 ENTRYPOINT ["/entrypoint.sh"]
