@@ -30,19 +30,9 @@ LABEL permissions='{\
 }'
 LABEL authors='[\
     {\
-        "name": "John Doe",\
-        "email": "john.doe@gmail.com"\
+        "name": "Dockerfile",\
     }\
 ]'
-LABEL company='{\
-    "about": "This is just an example",\
-    "name": "ACME Corporation",\
-    "email": "acme@corporation.com"\
-}'
-LABEL readme="https://raw.githubusercontent.com/patrickelectric/blueos-extension-template/master/README.md"
-LABEL type="example"
-LABEL tags='[\
-  "example"\
-]'
 
+LABEL readme="https://github.com/stormavenger21/CHT832X/blob/main/README.md"
 ENTRYPOINT ["/entrypoint.sh"]
