@@ -1,10 +1,15 @@
 {
-    "name": "Extension Name",
-    "description": "Extension description.",
-    "icon": "mdi-sail-boat",
-    "company": "ACME Corporation",
-    "version": "0.0.0",
-    "new_page": true,
-    "webpage": "https://github.com/patrickelectric/blueos-extension-template",
-    "api": ""
+  "targetSystem": "Cockpit",
+  "targetCockpitApiVersion": "1.0.0",
+  "widgets": [
+    {
+      "name": "CHT832x Temperature",
+      "iframeUrl": "/temperature.html",
+      "iframeIcon": "mdi-thermometer",
+      "version": "1.0.0",
+      "startCollapsed": false,
+      "useExtensionPathAsBaseUrl": true
+    }
+  ],
+  "actions": []
 }
