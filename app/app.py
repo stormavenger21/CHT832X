@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template
 import subprocess
 import time
-from app.sensor import CHT832x
+from sensor import CHT832x
 
 app = Flask(__name__)
 
