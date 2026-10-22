@@ -6,8 +6,11 @@ from app.sensor import CHT832x
 app = Flask(__name__)
 
 
-def read_temperature():
-    sensor = CHT832x(bus_number=1)
+def read_temperature_rh():
+    try:
+        sensor = CHT832x(bus_number=1)
+    except Exception as error:
+        print(f"Init error: {error}")
     try:
         measurement = sensor.read()
         print(
@@ -18,6 +21,8 @@ def read_temperature():
         )
     temperature = measurement['temperature_c']:.2f}
     humidity = measurement['humidity_fh']:.2f}
+    except Exception as error:
+        print(f"Sensor error: {error}")
     time.sleep(1)
 
     return [temperature, humidity]
@@ -30,12 +35,14 @@ def index():
 
 @app.route("/temperature")
 def temperature():
-    temp = read_temperature()[0]
-    humid = read_temperature()[1]
+    temp = read_temperature_rh()[0]
+    humid = read_temperature_rh()[1]
 
     return jsonify({
         "temperature": temp,
-        "unit": "°C"
+        "unit": "°C",
+        "humidity": humid,
+        "unit": "%"
     })
 
 
