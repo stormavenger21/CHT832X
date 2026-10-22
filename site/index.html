@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Temperature Monitor</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background: #f4f4f4;
+        }
+
+        .card {
+            display: inline-block;
+            padding: 30px 60px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px #ccc;
+        }
+
+        #temperature {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        #status {
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h1>Temperature Monitor</h1>
+
+        <div id="temperature">-- °C</div>
+
+        <p id="status">Connecting to sensor...</p>
+    </div>
+
+    <script>
+        async function updateTemperature() {
+            try {
+                const response = await fetch("/temperature");
+
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+
+                const data = await response.json();
+
+                document.getElementById("temperature").textContent =
+                    data.temperature.toFixed(2) + " " + data.unit;
+
+                document.getElementById("status").textContent =
+                    "Last updated: " + new Date().toLocaleTimeString();
+
+            } catch (error) {
+                document.getElementById("status").textContent =
+                    "Error reading temperature";
+            }
+        }
+
+        updateTemperature();
+
+        // Refresh every 2 seconds.
+        setInterval(updateTemperature, 2000);
+    </script>
+
+</body>
+</html>
