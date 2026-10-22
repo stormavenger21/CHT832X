@@ -20,7 +20,7 @@ def read_temperature_rh():
             f"{measurement['humidity_rh']:.2f} %RH"
         )
         temperature = measurement['temperature_c']
-        humidity = measurement['humidity_fh']
+        humidity = measurement['humidity_rh']
     except Exception as error:
         print(f"Sensor error: {error}")
     time.sleep(1)
