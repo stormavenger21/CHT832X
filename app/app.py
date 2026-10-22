@@ -7,6 +7,8 @@ app = Flask(__name__)
 
 
 def read_temperature_rh():
+    temperature = -273.15
+    humidity = 0.0
     try:
         sensor = CHT832x(bus_number=1)
     except Exception as error:
