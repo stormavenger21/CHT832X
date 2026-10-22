@@ -25,15 +25,20 @@ RUN chmod +x /entrypoint.sh
 
 WORKDIR /app
 
+#Host port is dynamically assigned
+#Container port is 80
 LABEL permissions='{\
   "ExposedPorts": {\
     "80/tcp": {}\
   },\
   "HostConfig": {\
+    "CpuPeriod":100000,\
+    "CpuQuota":20000,\
+    "Memory":209715200,\
     "PortBindings": {\
       "80/tcp": [\
         {\
-          "HostPort": ""\
+          "HostPort": ""\ 
         }\
       ]\
     },\
@@ -47,7 +52,7 @@ LABEL permissions='{\
   }\
 }'
 
-LABEL authors='[{"name":"CHT832x Extension"}]'
+LABEL authors='[{"name":"stormavenger21"}]'
 LABEL readme="https://github.com/stormavenger21/CHT832X/blob/main/README.md"
 
 ENTRYPOINT ["/entrypoint.sh"]
