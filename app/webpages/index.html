@@ -57,7 +57,11 @@
                 const data = await response.json();
 
                 document.getElementById("temperature").textContent =
-                    data.temperature.toFixed(2) + " " + data.unit;
+                    //data.temperature.toFixed(2) + " " + data.unit;
+                    data.temperature.toFixed(2);
+
+                 document.getElementById("humidity").textContent =
+                    data.temperature.toFixed(2);
 
                 document.getElementById("status").textContent =
                     "Last updated: " + new Date().toLocaleTimeString();
