@@ -42,9 +42,9 @@ def temperature():
 
     return jsonify({
         "temperature": temp,
-        "unit": "°C",
+        "unit (temp)": "°C",
         "humidity": humid,
-        "unit": "%"
+        "unit (humidity)": "%"
     })
 
 
