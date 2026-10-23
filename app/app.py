@@ -30,7 +30,7 @@ def read_temperature_rh():
     return [temperature, humidity]
 
 
-@app.route("/")
+@app.route("/site")
 def index():
     return render_template("site/index.html")
 
