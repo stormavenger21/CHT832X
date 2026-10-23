@@ -38,7 +38,7 @@ LABEL permissions='{\
     "PortBindings": {\
       "80/tcp": [\
         {\
-          "HostPort": ""\ 
+          "HostPort": "5000/tcp"\ 
         }\
       ]\
     },\
