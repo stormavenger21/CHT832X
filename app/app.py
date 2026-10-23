@@ -1,3 +1,9 @@
+# October 23 2026
+# app.py 
+#
+# app.py runs reads temperature and humidity date from the CHT832x sensor (via sensor.py), 
+# formats as JSON dict, then runs a Flask webapp and publishes the data to a development server
+
 from flask import Flask, jsonify, render_template
 import subprocess
 import time
@@ -15,12 +21,6 @@ def read_temperature_rh():
         print(f"Init error: {error}")
     try:
         measurement = sensor.read()
-        print(
-            f"Temperature: "
-            f"{measurement['temperature_c']:.2f} °C | "
-            f"Humidity: "
-            f"{measurement['humidity_rh']:.2f} %RH"
-        )
         temperature = measurement['temperature_c']
         humidity = measurement['humidity_rh']
     except Exception as error:
