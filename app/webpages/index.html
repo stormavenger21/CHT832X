@@ -22,11 +22,11 @@
             box-shadow: 0 2px 10px #ccc;
         }
 
-        #temperature {
+        #humidity {
             font-size: 48px;
             font-weight: bold;
         }
-        #humidity {
+        #temperature {
             font-size: 48px;
             font-weight: bold;
         }
@@ -42,9 +42,9 @@
     <div class="card">
         <h1>Hull Environment Monitor</h1>
 
-        <div id="temperature">-- *C</div>
+        <div id="humidity">-- %</div>
 
-        <div id="humidity">-- #</div>
+        <div id="temperature">-- *C</div>
 
         <p id="status">Connecting to sensor...</p>
     </div>
@@ -60,12 +60,12 @@
 
                 const data = await response.json();
 
+                document.getElementById("humidity").textContent =
+                    data.humdity.toFixed(2);
+
                 document.getElementById("temperature").textContent =
                     //data.temperature.toFixed(2) + " " + data.unit;
                     data.temperature.toFixed(2);
-
-                 document.getElementById("humidity").textContent =
-                    data.humdity.toFixed(2);
 
                 document.getElementById("status").textContent =
                     "Last updated: " + new Date().toLocaleTimeString();
