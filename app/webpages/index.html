@@ -26,6 +26,10 @@
             font-size: 48px;
             font-weight: bold;
         }
+        #humidity {
+            font-size: 48px;
+            font-weight: bold;
+        }
 
         #status {
             color: #666;
@@ -61,7 +65,7 @@
                     data.temperature.toFixed(2);
 
                  document.getElementById("humidity").textContent =
-                    data.humdity.toFixed(2);
+                    data.humdity.toFixed(3);
 
                 document.getElementById("status").textContent =
                     "Last updated: " + new Date().toLocaleTimeString();
