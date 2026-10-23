@@ -9,7 +9,10 @@ import subprocess
 import time
 from sensor import CHT832x
 
-app = Flask(__name__, template_folder="webpages")
+app = Flask(
+    __name__, 
+    template_folder="webpages"
+)
 
 
 def read_temperature_rh():
