@@ -67,6 +67,9 @@
                     //data.temperature.toFixed(2) + " " + data.unit;
                     data.temperature;
 
+                document.getElementById('temp-unit').textContent = 
+                    data['unit (temp)'];
+
                 document.getElementById("status").textContent =
                     "Last updated: " + new Date().toLocaleTimeString();
 
