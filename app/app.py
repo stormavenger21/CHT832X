@@ -32,7 +32,7 @@ def read_temperature_rh():
 
 @app.route("/site")
 def index():
-    return render_template("site/index.html")
+    return render_template("/site/index.html")
 
 
 @app.route("/temperature")
