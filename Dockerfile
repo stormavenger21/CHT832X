@@ -24,7 +24,7 @@ COPY app/ /CHT832X/app
 
 # Startup script
 COPY files/entrypoint.sh /CHT832X/files/entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /CHT832X/files/entrypoint.sh
 
 WORKDIR /CHT832X/app
 
