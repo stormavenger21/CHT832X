@@ -4,7 +4,7 @@ set -e
 
 echo "Starting CHT832x driver"
 
-cd /app
+cd /CHT832X/app
 exec python3 app.py
 
 echo "Starting Nginx..."
