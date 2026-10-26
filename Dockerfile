@@ -1,5 +1,7 @@
 FROM alpine:3.18.3
 
+#RUN apt update && apt install -y python3 python3-venv python3-pip
+
 RUN apk add --no-cache \
     nginx \
     python3 \
@@ -11,19 +13,20 @@ RUN apk add --no-cache \
 COPY files/nginx.conf /etc/nginx/nginx.conf
 
 # Web interface and Cockpit registration
-RUN mkdir -p /site
-COPY files/register_service /site/register_service
+RUN mkdir -p /CHT832X
+RUN mkdir -p /CHT832X/files
+COPY files/register_service /CHT832X/files/register_service
 
 
 # Python sensor driver and API
-RUN mkdir -p /app/app
-COPY app/ /app/app/
+RUN mkdir -p /CHT832X/app
+COPY app/ /CHT832X/app
 
 # Startup script
-COPY files/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+#COPY files/entrypoint.sh /entrypoint.sh
+#RUN chmod +x /entrypoint.sh
 
-WORKDIR /app
+WORKDIR /CHT832X/app
 
 #Host port is dynamically assigned
 #Container port is 80
@@ -55,4 +58,6 @@ LABEL permissions='{\
 LABEL authors='[{"name":"stormavenger21"}]'
 LABEL readme="https://github.com/stormavenger21/CHT832X/blob/main/README.md"
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN python3 app.py
+
+#ENTRYPOINT ["/entrypoint.sh"]
