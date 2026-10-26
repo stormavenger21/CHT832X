@@ -13,7 +13,7 @@ COPY files/nginx.conf /etc/nginx/nginx.conf
 # Web interface and Cockpit registration
 RUN mkdir -p /site
 COPY files/register_service /site/register_service
-COPY site/ /site/
+
 
 # Python sensor driver and API
 RUN mkdir -p /app/app
