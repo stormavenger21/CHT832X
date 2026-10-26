@@ -23,8 +23,8 @@ RUN mkdir -p /CHT832X/app
 COPY app/ /CHT832X/app
 
 # Startup script
-#COPY files/entrypoint.sh /entrypoint.sh
-#RUN chmod +x /entrypoint.sh
+COPY files/entrypoint.sh /CHT832X/files/entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 WORKDIR /CHT832X/app
 
@@ -58,6 +58,4 @@ LABEL permissions='{\
 LABEL authors='[{"name":"stormavenger21"}]'
 LABEL readme="https://github.com/stormavenger21/CHT832X/blob/main/README.md"
 
-RUN python3 app.py
-
-#ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
