@@ -52,6 +52,9 @@ LABEL permissions='{\
         "CgroupPermissions": "rwm"\
       }\
     ]\
+    "Binds":[\
+      "/dev:/dev"\
+    ]\
   }\
 }'
 
