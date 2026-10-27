@@ -58,4 +58,4 @@ LABEL permissions='{\
 LABEL authors='[{"name":"stormavenger21"}]'
 LABEL readme="https://github.com/stormavenger21/CHT832X/blob/main/README.md"
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/CHT832X/files/entrypoint.sh"]
