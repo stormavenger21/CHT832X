@@ -39,7 +39,7 @@ LABEL permissions='{\
     "CpuQuota":20000,\
     "Memory":209715200,\
     "PortBindings": {\
-      "80/tcp": [\
+      "5000/tcp": [\
         {\
           "HostPort": "5000/tcp"\ 
         }\
