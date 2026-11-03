@@ -45,14 +45,11 @@ LABEL permissions='{\
         }\
       ]\
     },\
-    "Binds":[\
-      "/dev:/dev"\
-    ]\
     "Devices": [\
       {\
         "PathOnHost": "/dev/i2c-1",\
         "PathInContainer": "/dev/i2c-1",\
-        "CgroupPermissions": "rwm"\
+        "CgroupPermissions": "rw"\
       }\
     ]\
   }\
