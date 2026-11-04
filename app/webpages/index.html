@@ -4,34 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Temperature Monitor</title>
+    <title>Hull Environment Monitor</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 100px;
+            margin: 60px 15px;
             background: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
         }
 
         .card {
-            display: inline-block;
-            padding: 30px 60px;
+            min-width: 180px;
+            padding: 25px 35px;
             background: white;
             border-radius: 12px;
             box-shadow: 0 2px 10px #ccc;
         }
 
-        #humidity {
-            font-size: 48px;
-            font-weight: bold;
+        .label {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 15px;
         }
-        #temperature {
-            font-size: 48px;
+
+        .value {
+            font-size: 42px;
             font-weight: bold;
         }
 
+        .unit {
+            font-size: 20px;
+            color: #666;
+        }
+
         #status {
+            margin-top: 30px;
             color: #666;
         }
     </style>
@@ -39,19 +59,66 @@
 
 <body>
 
-    <div class="card">
-        <h1>Hull Environment Monitor</h1>
+    <h1>Hull Environment Monitor</h1>
 
-        <div id="humidity">-- %</div>
+    <div class="container">
 
-        <div id="temperature">-- *C</div>
+        <div class="card">
+            <div class="label">Temperature</div>
+            <div class="value">
+                <span id="temperature">--</span>
+                <span class="unit">°C</span>
+            </div>
+        </div>
 
-        <p id="status">Connecting to sensor...</p>
+        <div class="card">
+            <div class="label">Relative Humidity</div>
+            <div class="value">
+                <span id="humidity">--</span>
+                <span class="unit">%</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="label">Dew Point</div>
+            <div class="value">
+                <span id="dewpoint">--</span>
+                <span class="unit">°C</span>
+            </div>
+        </div>
+
     </div>
 
+    <p id="status">Connecting to sensor...</p>
+
     <script>
+
+        // Calculate dew point using the Magnus formula.
+        function calculateDewPoint(temperature, humidity) {
+
+            if (humidity <= 0 || humidity > 100) {
+                return null;
+            }
+
+            const a = 17.62;
+            const b = 243.12;
+
+            const gamma =
+                Math.log(humidity / 100) +
+                (a * temperature) / (b + temperature);
+
+            const dewPoint =
+                (b * gamma) / (a - gamma);
+
+            return dewPoint;
+        }
+
+
+        // Retrieve sensor readings and update the webpage.
         async function updateTemperature() {
+
             try {
+
                 const response = await fetch("/temperature");
 
                 if (!response.ok) {
@@ -60,30 +127,53 @@
 
                 const data = await response.json();
 
-                document.getElementById("humidity").textContent =
-                    data.humidity;
+                const temperature = Number(data.temperature);
+                const humidity = Number(data.humidity);
 
+                if (!Number.isFinite(temperature) ||
+                    !Number.isFinite(humidity)) {
+                    throw new Error("Invalid sensor readings");
+                }
+
+                const dewPoint =
+                    calculateDewPoint(temperature, humidity);
+
+                // Update temperature.
                 document.getElementById("temperature").textContent =
-                    //data.temperature.toFixed(2) + " " + data.unit;
-                    data.temperature;
+                    temperature.toFixed(2);
 
-                document.getElementById('temp-unit').textContent = 
-                    data['unit (temp)'];
+                // Update relative humidity.
+                document.getElementById("humidity").textContent =
+                    humidity.toFixed(2);
 
+                // Update dew point.
+                document.getElementById("dewpoint").textContent =
+                    dewPoint !== null
+                        ? dewPoint.toFixed(2)
+                        : "N/A";
+
+                // Update connection status.
                 document.getElementById("status").textContent =
-                    "Last updated: "
-                    //"Last updated: " + new Date().toLocaleTimeString("en-CA");
+                    "Last updated: " +
+                    new Date().toLocaleTimeString("en-CA");
 
             } catch (error) {
+
+                console.error("Sensor error:", error);
+
                 document.getElementById("status").textContent =
-                    "Error reading temperature";
+                    "Error reading sensor";
+
             }
         }
 
+
+        // Initial sensor reading.
         updateTemperature();
 
         // Refresh every 2 seconds.
         setInterval(updateTemperature, 2000);
+
     </script>
 
 </body>
