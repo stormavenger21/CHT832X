@@ -40,8 +40,8 @@ def index():
 
 @app.route("/temperature")
 def temperature():
-    temp = read_temperature_rh()[0]
-    humid = read_temperature_rh()[1]
+    temp, humid = read_temperature_rh()
+    #humid = read_temperature_rh()[1]
 
     return jsonify({
         "temperature": temp,
