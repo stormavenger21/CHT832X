@@ -71,7 +71,8 @@
                     data['unit (temp)'];
 
                 document.getElementById("status").textContent =
-                    "Last updated: " + new Date().toLocaleTimeString("en-CA");
+                    "Last updated: "
+                    //"Last updated: " + new Date().toLocaleTimeString("en-CA");
 
             } catch (error) {
                 document.getElementById("status").textContent =
