@@ -32,7 +32,7 @@ WORKDIR /CHT832X/app
 #Container port is 80
 LABEL permissions='{\
   "ExposedPorts": {\
-    "80/tcp": {}\
+    "5000/tcp": {}\
   },\
   "HostConfig": {\
     "CpuPeriod":100000,\
