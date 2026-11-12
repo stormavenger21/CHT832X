@@ -1,25 +1,55 @@
 # BlueOS Extension for CHT832X
 
-This repo integrates the CHT832X temperature and humidity sensor with a Raspberry Pi and BlueOS. 
+This repo integrates the CHT832X temperature and humidity sensor with a Raspberry Pi and BlueOS. Humidity, temperature and dew point are displayed on a website.
 
 
-## Instructions for Direct Raspberry Use
+## Installation Instructions
+
+
+### Expose the I2C Bus to the Docker Container
+```
+{
+  "ExposedPorts": {
+    "5000/tcp": {}
+  },
+  "HostConfig": {
+    "CpuPeriod": 100000,
+    "CpuQuota": 20000,
+    "Memory": 209715200,
+    "PortBindings": {
+      "5000/tcp": [
+        {
+          "HostPort": "5000/tcp"
+        }
+      ]
+    },
+    "Devices": [
+      {
+        "PathOnHost": "/dev/i2c-1",
+        "PathInContainer": "/dev/i2c-1",
+        "CgroupPermissions": "rw"
+      }
+    ]
+  }
+}
+```
+
+
+
+## Testing (without docker)
 
 - Navigate to your extension's source code.
 
-- Execute the following command to build your extension:
+- Execute the following command to build the extension:
 
-   ```
-   cd <path-to-extension>
-   docker build .
-   docker tag blueos-cht832x:0.1 <user>/blueos-cht832x:0.1
-   
-   docker login -u <username>
-   docker push vrfd01/blueos-cht832x:0.1
-    ```
+```
+cd <path-to-extension>
+docker build .
+docker tag blueos-cht832x:0.1 <user>/blueos-cht832x:0.1
 
-
-## Testing 
+docker login -u <username>
+docker push vrfd01/blueos-cht832x:0.1
+ ```
 
 - Execute a git pull into the raspberry pi
 ```
