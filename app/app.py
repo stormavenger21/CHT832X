@@ -1,4 +1,3 @@
-```python
 # October 23 2026
 # app.py
 #
